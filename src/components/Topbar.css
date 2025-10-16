@@ -1,0 +1,59 @@
+.topbar {
+  background-color: #003366; /* Azul escuro */
+  color: yellow;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.topbar-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffd700; /* Amarelo dourado */
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info {
+  color: white;
+  font-weight: 500;
+}
+
+.logout-btn, .login-btn {
+  background-color: #ff4444;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.2s;
+}
+
+.logout-btn:hover, .login-btn:hover {
+  background-color: #cc0000;
+}
+.add-hq-btn {
+  background-color: #00aaff;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.2s;
+}
+
+.add-hq-btn:hover {
+  background-color: #0088cc;
+}
