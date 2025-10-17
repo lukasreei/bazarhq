@@ -78,7 +78,11 @@ const Home = ({ user }) => {
           <option value="all">Todas as categorias</option>
           <option value="acao">Ação</option>
           <option value="aventura">Aventura</option>
+          <option value="super-heroi">Conto</option>
+          <option value="super-heroi">HQ</option>
+          <option value="super-heroi">Shounen</option>
           <option value="super-heroi">Super-herói</option>
+          <option value="super-heroi">Romamnce</option>
           {/* Adicione mais categorias conforme necessário */}
         </select>
 
