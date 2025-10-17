@@ -106,7 +106,12 @@ const Home = ({ user }) => {
               key={hq.id}
               className={`hq-card ${hq.soldOut ? "hq-esgotado-card" : ""}`}
             >
-              <img src={hq.image} alt={hq.title} className="hq-image" />
+              <img
+  src={hq.images && hq.images.length > 0 ? hq.images[0] : "/placeholder.jpg"}
+  alt={hq.title}
+  className="hq-image"
+/>
+
               <h3>{hq.title}</h3>
               <p className="hq-description">{hq.description}</p>
 
