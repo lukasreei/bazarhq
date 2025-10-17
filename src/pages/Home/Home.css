@@ -1,7 +1,7 @@
 .home-container {
   padding: 30px;
   text-align: center;
-  background-color: #f4f4f9;
+  background-color: #ffffff;
   min-height: 100vh;
 }
 
@@ -105,4 +105,18 @@
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 16px;
+}
+/* Card esgotado */
+.hq-esgotado-card {
+  border: 2px solid red;
+  background-color: #ffe6e6; /* fundo rosado para destacar */
+}
+
+/* Texto Esgotado */
+.hq-esgotado {
+  color: red;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-align: center;
 }

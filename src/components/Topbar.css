@@ -1,6 +1,14 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
 .topbar {
+  position: relative;
+  z-index: 1000; /* garante que fique acima de outros elementos */
   background-color: #003366; /* Azul escuro */
-  color: yellow;
+  color: #ffd700; /* Amarelo dourado */
   padding: 15px 30px;
   display: flex;
   justify-content: space-between;
@@ -11,7 +19,7 @@
 .topbar-title {
   font-size: 24px;
   font-weight: bold;
-  color: #ffd700; /* Amarelo dourado */
+  color: #ffd700;
 }
 
 .topbar-right {
@@ -20,44 +28,13 @@
   gap: 15px;
 }
 
-.user-info {
-  color: white;
-  font-weight: 500;
-}
-
-.logout-btn, .login-btn {
-  background-color: #ff4444;
-  border: none;
-  color: white;
-  padding: 8px 15px;
-  border-radius: 8px;
-  cursor: pointer;
+/* Botões principais da topbar */
+.topbar-buttons {
   display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: 0.2s;
+  gap: 10px;
 }
 
-.logout-btn:hover, .login-btn:hover {
-  background-color: #cc0000;
-}
-.add-hq-btn {
-  background-color: #00aaff;
-  border: none;
-  color: white;
-  padding: 8px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: 0.2s;
-}
-
-.add-hq-btn:hover {
-  background-color: #0088cc;
-}
-.home-btn {
+.topbar-btn {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -71,6 +48,36 @@
   transition: 0.2s;
 }
 
-.home-btn:hover {
+.topbar-btn:hover {
   background-color: #0066cc;
+}
+
+/* Botão de logout */
+.logout-btn {
+  background-color: #ff4444;
+}
+
+.logout-btn:hover {
+  background-color: #cc0000;
+}
+
+/* Botão de login */
+.login-btn {
+  background-color: #00aaff;
+}
+
+.login-btn:hover {
+  background-color: #0088cc;
+}
+
+/* Informação do usuário */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info {
+  color: white;
+  font-weight: 500;
 }

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-route
 import Topbar from "./components/Topbar";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
+import EstoquePage from "./pages/Estoque/EstoquePage";
 import CadastroHQ from "./pages/CadastroHQ/CadastroHQ";
 import DetalhesHQ from "./pages/DetalhesHQ/DetalhesHQ";
 import { getAuth, signOut } from "firebase/auth";
@@ -28,6 +29,7 @@ function App() {
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/add-hq" element={<CadastroHQ user={user} />} />
         <Route path="/detalhes/:id" element={<DetalhesHQ />} />
+        <Route path="/estoque" element={<EstoquePage user={user} />} />
         <Route path="*" element={<Home user={user} />} />
       </Routes>
     </Router>

@@ -98,22 +98,40 @@ const Home = ({ user }) => {
       ) : (
         <div className="hq-grid">
           {filteredHqs.map((hq) => (
-            <div key={hq.id} className="hq-card">
+            <div
+              key={hq.id}
+              className={`hq-card ${hq.soldOut ? "hq-esgotado-card" : ""}`}
+            >
               <img src={hq.image} alt={hq.title} className="hq-image" />
               <h3>{hq.title}</h3>
               <p className="hq-description">{hq.description}</p>
-              <p className="hq-price">{hq.price}</p>
+
+              {/* Status ou preço */}
+              {hq.soldOut ? (
+                <p
+                  className="hq-esgotado"
+                  style={{ color: "red", fontWeight: "bold" }}
+                >
+                  ⚠️ Esgotado
+                </p>
+              ) : (
+                <p className="hq-price">{hq.price}</p>
+              )}
 
               <div className="hq-buttons">
-                <button onClick={() => navigate(`/detalhes/${hq.id}`)}>Ver mais</button>
+                <button onClick={() => navigate(`/detalhes/${hq.id}`)}>
+                  Ver mais
+                </button>
 
-                <a
-                  href={`https://wa.me/${hq.whatsapp}?text=Olá! Tenho interesse na HQ "${hq.title}"`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <button className="whatsapp-btn">Falar no WhatsApp</button>
-                </a>
+                {!hq.soldOut && (
+                  <a
+                    href={`https://wa.me/${hq.whatsapp}?text=Olá! Tenho interesse na HQ "${hq.title}"`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <button className="whatsapp-btn">Falar no WhatsApp</button>
+                  </a>
+                )}
               </div>
             </div>
           ))}
