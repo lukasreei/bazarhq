@@ -13,13 +13,13 @@ export default function CadastroHQ({ user }) {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("acao");
   const [whatsapp, setWhatsapp] = useState("");
-  const [images, setImages] = useState([]); // array de arquivos
+  const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   if (!user) return <p>Você precisa estar logado para cadastrar HQs.</p>;
 
-  // adiciona imagens, até no máximo 3
+  // Adiciona imagens (máx. 3)
   const handleImagesChange = (e) => {
     const files = Array.from(e.target.files);
     if (files.length + images.length > 3) {
@@ -30,6 +30,7 @@ export default function CadastroHQ({ user }) {
   };
 
   const handleRemoveImage = (index) => {
+    URL.revokeObjectURL(images[index]);
     setImages(images.filter((_, i) => i !== index));
   };
 
@@ -41,12 +42,13 @@ export default function CadastroHQ({ user }) {
     }
 
     setLoading(true);
+    setError("");
 
     try {
-      // Upload de todas as imagens para Storage
+      // Upload das imagens
       const imageUrls = [];
       for (let i = 0; i < images.length; i++) {
-        const imageRef = ref(storage, `hqs/${Date.now()}-${images[i].name}`);
+        const imageRef = ref(storage, `hqs/${user.uid}-${Date.now()}-${images[i].name}`);
         await uploadBytes(imageRef, images[i]);
         const url = await getDownloadURL(imageRef);
         imageUrls.push(url);
@@ -59,16 +61,25 @@ export default function CadastroHQ({ user }) {
         price,
         category,
         whatsapp,
-        images: imageUrls, // salva array de URLs
+        images: imageUrls,
         createdAt: Timestamp.now(),
         userId: user.uid,
       });
 
+      // Limpeza de campos e previews
+      setTitle("");
+      setDescription("");
+      setPrice("");
+      setCategory("acao");
+      setWhatsapp("");
+      images.forEach((img) => URL.revokeObjectURL(img));
+      setImages([]);
+
       setLoading(false);
       navigate("/"); // volta para Home
     } catch (err) {
-      console.error(err);
-      setError("Erro ao cadastrar HQ.");
+      console.error("Erro ao cadastrar HQ:", err);
+      setError("Erro ao cadastrar HQ: " + err.message);
       setLoading(false);
     }
   };
@@ -104,11 +115,11 @@ export default function CadastroHQ({ user }) {
         >
           <option value="acao">Ação</option>
           <option value="aventura">Aventura</option>
-          <option value="super-heroi">Conto</option>
-          <option value="super-heroi">HQ</option>
-          <option value="super-heroi">Shounen</option>
+          <option value="conto">Conto</option>
+          <option value="hq">HQ</option>
+          <option value="shounen">Shounen</option>
           <option value="super-heroi">Super-herói</option>
-          <option value="super-heroi">Romamnce</option>
+          <option value="romance">Romance</option>
         </select>
         <input
           type="text"
