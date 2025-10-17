@@ -1,28 +1,46 @@
-// src/pages/Login/Login.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import "./Login.css";
 
-export default function Login() {
+export default function Login({ setUser }) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, senha);
-      alert("Login realizado com sucesso!");
-    } catch (error) {
-      alert(error.message);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      setUser(userCredential.user); // atualiza usuário logado
+      navigate("/"); // redireciona para Home
+    } catch (err) {
+      setError("Email ou senha incorretos");
+      console.error(err);
     }
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Login Vendedor</h2>
-      <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "10px", maxWidth: "300px" }}>
-        <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-        <input type="password" placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} />
+    <div className="login-container">
+      <h2>Login do Vendedor</h2>
+      <form onSubmit={handleLogin} className="login-form">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        {error && <p className="login-error">{error}</p>}
         <button type="submit">Entrar</button>
       </form>
     </div>

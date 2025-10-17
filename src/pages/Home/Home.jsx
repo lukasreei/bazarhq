@@ -8,27 +8,11 @@ const Home = ({ user }) => {
   const navigate = useNavigate();
   const [hqs, setHqs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState(""); // busca por título
+  const [categoryFilter, setCategoryFilter] = useState("all"); // filtro de categoria
+  const [sortOrder, setSortOrder] = useState("asc"); // ordenação A→Z ou Z→A
 
   useEffect(() => {
-    const defaultHqs = [
-      {
-        id: 1,
-        title: "A Lenda do Cavaleiro",
-        description: "Uma jornada épica sobre coragem e honra.",
-        price: "R$ 29,90",
-        image: "https://m.media-amazon.com/images/I/81aLZ6nLq8L.jpg",
-        whatsapp: "5583988888888",
-      },
-      {
-        id: 2,
-        title: "Sombras da Lua",
-        description: "Uma história sombria de mistério e magia.",
-        price: "R$ 19,90",
-        image: "https://m.media-amazon.com/images/I/71h7XoH0k-L.jpg",
-        whatsapp: "5583988888888",
-      },
-    ];
-
     const fetchHqs = async () => {
       try {
         const hqsCollection = collection(db, "hqs");
@@ -38,16 +22,11 @@ const Home = ({ user }) => {
           ...doc.data(),
         }));
 
-        if (firestoreHqs.length > 0) {
-          setHqs(firestoreHqs);
-        } else {
-          setHqs(defaultHqs);
-        }
-
+        setHqs(firestoreHqs);
         setLoading(false);
       } catch (error) {
         console.error("Erro ao buscar HQs:", error);
-        setHqs(defaultHqs);
+        setHqs([]);
         setLoading(false);
       }
     };
@@ -55,7 +34,20 @@ const Home = ({ user }) => {
     fetchHqs();
   }, []);
 
-  if (loading) return <p>Carregando HQs...</p>;
+  if (loading) return <p className="loading">Carregando HQs...</p>;
+
+  // Filtra e ordena HQs
+  const filteredHqs = hqs
+    .filter(
+      (hq) =>
+        hq.title.toLowerCase().includes(search.toLowerCase()) &&
+        (categoryFilter === "all" || hq.category === categoryFilter)
+    )
+    .sort((a, b) =>
+      sortOrder === "asc"
+        ? a.title.localeCompare(b.title)
+        : b.title.localeCompare(a.title)
+    );
 
   return (
     <div className="home-container">
@@ -63,19 +55,49 @@ const Home = ({ user }) => {
 
       {/* Botão para adicionar HQs apenas para usuários logados */}
       {user && (
-        <button
-          className="add-hq-btn"
-          onClick={() => navigate("/add-hq")}
-        >
+        <button className="add-hq-btn" onClick={() => navigate("/add-hq")}>
           + Cadastrar HQ
         </button>
       )}
 
-      {hqs.length === 0 ? (
-        <p>Nenhuma HQ cadastrada ainda 😕</p>
+      {/* Filtros */}
+      <div className="filters">
+        <input
+          type="text"
+          placeholder="Buscar HQ pelo título..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="search-input"
+        />
+
+        <select
+          value={categoryFilter}
+          onChange={(e) => setCategoryFilter(e.target.value)}
+          className="filter-select"
+        >
+          <option value="all">Todas as categorias</option>
+          <option value="acao">Ação</option>
+          <option value="aventura">Aventura</option>
+          <option value="super-heroi">Super-herói</option>
+          {/* Adicione mais categorias conforme necessário */}
+        </select>
+
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="filter-select"
+        >
+          <option value="asc">Ordem alfabética: A → Z</option>
+          <option value="desc">Ordem alfabética: Z → A</option>
+        </select>
+      </div>
+
+      {/* Grid de HQs */}
+      {filteredHqs.length === 0 ? (
+        <p>Nenhuma HQ encontrada 😕</p>
       ) : (
         <div className="hq-grid">
-          {hqs.map((hq) => (
+          {filteredHqs.map((hq) => (
             <div key={hq.id} className="hq-card">
               <img src={hq.image} alt={hq.title} className="hq-image" />
               <h3>{hq.title}</h3>
@@ -83,7 +105,8 @@ const Home = ({ user }) => {
               <p className="hq-price">{hq.price}</p>
 
               <div className="hq-buttons">
-                <button onClick={() => navigate(`/hq/${hq.id}`)}>Ver mais</button>
+                <button onClick={() => navigate(`/detalhes/${hq.id}`)}>Ver mais</button>
+
                 <a
                   href={`https://wa.me/${hq.whatsapp}?text=Olá! Tenho interesse na HQ "${hq.title}"`}
                   target="_blank"

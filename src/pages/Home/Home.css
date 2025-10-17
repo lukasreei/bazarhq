@@ -89,3 +89,20 @@
 .add-hq-btn:hover {
   background-color: #218838;
 }
+/* Container de filtros */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+/* Input de busca e selects */
+.search-input,
+.filter-select {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
