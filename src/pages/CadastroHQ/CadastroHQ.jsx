@@ -104,8 +104,11 @@ export default function CadastroHQ({ user }) {
         >
           <option value="acao">Ação</option>
           <option value="aventura">Aventura</option>
+          <option value="super-heroi">Conto</option>
+          <option value="super-heroi">HQ</option>
+          <option value="super-heroi">Shounen</option>
           <option value="super-heroi">Super-herói</option>
-        </select>
+          <option value="super-heroi">Romamnce</option>
         <input
           type="text"
           placeholder="WhatsApp (somente números)"
