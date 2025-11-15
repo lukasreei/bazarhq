@@ -19,6 +19,29 @@ export default function CadastroHQ({ user }) {
 
   if (!user) return <p>Você precisa estar logado para cadastrar HQs.</p>;
 
+  // Normaliza e valida o número de WhatsApp
+  const normalizeWhatsapp = (input) => {
+    if (!input) return "";
+    // remove tudo que não é dígito
+    let digits = input.replace(/\D/g, "");
+
+    // remove zeros à esquerda excessivos
+    digits = digits.replace(/^0+/, "");
+
+    // se já tem 55, mantém; se não tiver e começar com DDD (ex: 83...), adiciona 55
+    if (!digits.startsWith("55")) {
+      // Se começar com DDD (2 dígitos) ou com número (10/11 dígitos), adiciona 55
+      digits = "55" + digits;
+    }
+
+    return digits;
+  };
+
+  const isValidWhatsapp = (normalized) => {
+    // Após normalizar, o padrão aceitável é: 55 + DDD(2) + número(8 ou 9) => 12 ou 13 dígitos
+    return /^55\d{10,11}$/.test(normalized);
+  };
+
   // adiciona imagens, até no máximo 3
   const handleImagesChange = (e) => {
     const files = Array.from(e.target.files);
@@ -35,8 +58,19 @@ export default function CadastroHQ({ user }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+
     if (!title || !description || !price || !whatsapp || images.length === 0) {
       setError("Preencha todos os campos e selecione pelo menos 1 imagem.");
+      return;
+    }
+
+    const formattedWhats = normalizeWhatsapp(whatsapp);
+
+    if (!isValidWhatsapp(formattedWhats)) {
+      setError(
+        "Número de WhatsApp inválido. Digite apenas números (ex.: 999999999 ou 83 99999-9999). O sistema adicionará +55 automaticamente."
+      );
       return;
     }
 
@@ -52,13 +86,13 @@ export default function CadastroHQ({ user }) {
         imageUrls.push(url);
       }
 
-      // Cadastro no Firestore
+      // Cadastro no Firestore com o número já normalizado (sem +, sem espaços)
       await addDoc(collection(db, "hqs"), {
         title,
         description,
         price,
         category,
-        whatsapp: `+55 83 ${whatsapp}`,
+        whatsapp: formattedWhats, // já no formato 5583xxxxxxxx
         images: imageUrls, // salva array de URLs
         createdAt: Timestamp.now(),
         userId: user.uid,
@@ -112,7 +146,7 @@ export default function CadastroHQ({ user }) {
         </select>
         <input
           type="text"
-          placeholder="WhatsApp (somente números)"
+          placeholder="WhatsApp (ex.: 999999999 ou 83 99999-9999)"
           value={whatsapp}
           onChange={(e) => setWhatsapp(e.target.value)}
           required
