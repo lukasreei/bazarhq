@@ -11,16 +11,18 @@
 .carousel {
   position: relative;
   width: 100%;
-  height: 350px;
+  max-height: 600px;   /* aumenta o tamanho máximo */
   margin: 20px 0;
 }
 
 .carousel-img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;         /* deixa a imagem crescer naturalmente */
+  max-height: 600px;    /* controla sem esmagar */
+  object-fit: contain;  /* mantém proporção */
   border-radius: 12px;
 }
+
 
 .carousel-btn {
   position: absolute;
