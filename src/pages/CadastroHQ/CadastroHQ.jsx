@@ -104,11 +104,11 @@ export default function CadastroHQ({ user }) {
         >
           <option value="acao">Ação</option>
           <option value="aventura">Aventura</option>
-          <option value="super-heroi">Conto</option>
-          <option value="super-heroi">HQ</option>
-          <option value="super-heroi">Shounen</option>
-          <option value="super-heroi">Super-herói</option>
-          <option value="super-heroi">Romamnce</option>
+          <option value="Conto">Conto</option>
+          <option value="HQ">HQ</option>
+          <option value="Shounen">Shounen</option>
+          <option value="Super-Heroi">Super-herói</option>
+          <option value="Romance">Romamnce</option>
         </select>
         <input
           type="text"

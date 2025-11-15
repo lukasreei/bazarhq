@@ -124,7 +124,7 @@ const Home = ({ user }) => {
                   ⚠️ Esgotado
                 </p>
               ) : (
-                <p className="hq-price">{hq.price}</p>
+                <p className="hq-price">R${hq.price}</p>
               )}
 
               <div className="hq-buttons">

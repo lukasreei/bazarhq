@@ -69,7 +69,7 @@ export default function DetalhesHQ() {
 
       <p className="hq-description">{hq.description}</p>
       <p className="hq-category">Categoria: {hq.category}</p>
-      <p className="hq-price">Preço: {hq.price}</p>
+      <p className="hq-price">Preço: R${hq.price}</p>
 
       <a
         href={`https://wa.me/${hq.whatsapp}?text=Olá! Tenho interesse na HQ "${hq.title}"`}
