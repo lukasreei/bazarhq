@@ -58,7 +58,7 @@ export default function CadastroHQ({ user }) {
         description,
         price,
         category,
-        whatsapp: `+5583${whatsapp}`,
+        whatsapp: `+55 83 ${whatsapp}`,
         images: imageUrls, // salva array de URLs
         createdAt: Timestamp.now(),
         userId: user.uid,
