@@ -7,7 +7,7 @@ body, html {
 .topbar {
   position: relative;
   z-index: 1000; /* garante que fique acima de outros elementos */
-  background-color: #003366; /* Azul escuro */
+  background-color: #0104c2; /* Azul escuro */
   color: #ffd700; /* Amarelo dourado */
   padding: 15px 30px;
   display: flex;
@@ -80,4 +80,17 @@ body, html {
 .user-info {
   color: white;
   font-weight: 500;
+}
+/* Container da logo + título */
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Imagem da logo */
+.logo-img {
+  width: 80px;
+  height: 70px;
+  object-fit: contain;
 }

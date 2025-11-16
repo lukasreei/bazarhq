@@ -2,15 +2,24 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { LogIn, LogOut, PlusCircle, Home, Archive } from "lucide-react";
 import "./Topbar.css";
+import logo from "../assets/logo1.png";
+
 
 const Topbar = ({ user, onLogout }) => {
   const navigate = useNavigate();
 
   return (
     <div className="topbar">
-      <h1 className="topbar-title">DEMOLAY RIO TINTO</h1>
 
+      {/* Logo + título */}
+      <div className="topbar-left">
+        <img src={logo} className="logo-img" />
+        <h1 className="topbar-title">DEMOLAY RIO TINTO</h1>
+      </div>
+
+      {/* Área da direita */}
       <div className="topbar-right">
+        
         {/* Botões principais */}
         <div className="topbar-buttons">
           <button className="topbar-btn" onClick={() => navigate("/")}>
@@ -30,7 +39,7 @@ const Topbar = ({ user, onLogout }) => {
           )}
         </div>
 
-        {/* Informações do usuário */}
+        {/* Usuário */}
         {user ? (
           <div className="user-section">
             <span className="user-info">👋 {user.email}</span>
